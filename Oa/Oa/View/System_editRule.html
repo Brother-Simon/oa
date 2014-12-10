@@ -1,0 +1,89 @@
+<div style='padding:10px;word-break:break-all;'>
+	<form id='editRule' method='post' action="<{:U('Oa/System/editRule')}>">
+		<div style='width:100%;height:30px;'>
+			<span>上级规则：</span>
+			<input id='Rule-pid' name='pid'>
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>规则名称：</span>
+			<input id='Rule-title' name='title' value='<{$Rule.title}>' />
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>规则标识：</span>
+			<input id='Rule-name' name='name' style='width:188px;' value='<{$Rule.name}>' />
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>规则类型：</span>
+			<input id='type1' name='type' type='radio' value='1' <if condition="$Rule.type eq 1">checked</if> />  <label for='type1'>URL模式</label>
+			<input id='type2' name='type' type='radio' value='2' <if condition="$Rule.type eq 2">checked</if> />  <label for='type2'>菜单模式</label>
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>规则状态：</span>
+			<input id='status1' name='status' type='radio' value='1' <if condition="$Rule.status">checked</if> />  <label for='status1'>启用</label>
+			<input id='status0' name='status' type='radio' value='0' <if condition="$Rule.status eq 0">checked</if> />  <label for='status0'>禁用</label>
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>规则条件：</span>
+			<input id='Rule-condition' name='condition' value='<{$Rule.condition}>' />
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>规则排序：</span>
+			<input id='Rule-sort' name='sort' value='<{$Rule.sort}>' />
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>规则显示：</span>
+			<input id='is_show1' name='is_show' type='radio' value='1' <if condition="$Rule.is_show">checked</if> />  <label for='is_show1'>显示</label>
+			<input id='is_show0' name='is_show' type='radio' value='0' <if condition="$Rule.is_show eq 0">checked</if> />  <label for='is_show0'>隐藏</label>
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>规则图标：</span>
+			<input id='Rule-cls' name='cls' />
+		</div>
+		<input type='hidden' name='editRule' value='editRule' />
+		<input type='hidden' name='id' value='<{$Rule.id}>' />
+	</form>
+</div>
+<script type="text/javascript">
+$.extend($.fn.textbox.defaults.rules, {
+	Rule: {
+		validator: function(value){
+			return /([A-Z][a-z1-9])+/.test(value);
+		},
+		message: '必须为首字母大写的驼峰法命名'
+	},
+});
+$("#Rule-pid").combotree({
+	width: 192,
+	value: <{$Rule.pid}>,
+	url: '<{:U("Oa/System/treeRule")}>',
+	require: true,
+});
+$("#Rule-title").textbox({
+	width: 190,
+	require: true,
+	missingMessage: "必须填写规则名称",
+});
+$("#Rule-name").textbox({
+    required: true,
+    validType:['length[2,40]','remote[\'<{:U("Oa/System/checkEditRule")}>/id/<{$Rule.id}>\',\'name\']'],
+    queryParams: {
+    	id: <{$Rule.id}>,
+    },
+    missingMessage: "必须填写规则URL",
+    invalidMessage: "已经存在该规则",
+});
+$("#Rule-condition").textbox({
+	width: 190,
+});
+$("#Rule-sort").textbox({
+	width: 50,
+	require: true,
+	missingMessage: "必须填写排序值",
+	prompt: 50,
+});
+$("#Rule-cls").combotree({
+	width: 190,
+	value: '<{$Rule.cls}>',
+	url: "/Public/Json/icon.php",
+});
+</script>

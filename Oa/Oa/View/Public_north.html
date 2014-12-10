@@ -1,0 +1,33 @@
+<div style="float:right;">
+	<foreach name="Apps" item="A" key="k">
+	<a href="javascript:void(0);" data-url='<{:U("Oa/Public/getLeftMenu")}>' data-click='true' class="north-category" data-id="<{$A.id}>"><{$A.title}></a>
+	</foreach>
+	<a href="javascript:void(0);" data-click='false' class="north-category easyui-splitbutton" data-options="menu:'#toparea-user-info-box'">用户信息</a>
+	<a href="javascript:void(0);" data-click='false' class="north-category easyui-splitbutton" data-options="menu:'#toparea-help-box'">系统帮助</a>
+	<div id="toparea-user-info-box" style="display:none;">
+		<div data-options="iconCls:'icon-user_suit'"><{$Think.session.user.username}></div>
+		<div class="menu-sep"></div>
+		<div data-options="iconCls:'icon-user_comment'">个人信息</div>
+		<div data-options="iconCls:'icon-user_edit'">修改密码</div>
+		<div class="menu-sep"></div>
+		<div data-options="iconCls:'icons-user-user_go'" onclick="OaModule.jump('<{:U('Oa/Login/logout')}>');">退出登录</div>
+	</div>
+	<div id="toparea-help-box" style="display:none;">
+		<div onclick="window.open('http://www.0796z.com')">官方网站</div>
+		<div onclick="$.messager.alert('问题反馈', '请发邮件到624508914@qq.com提交反馈，谢谢！', 'info');">问题反馈</div>
+		<div class="menu-sep"></div>
+		<div>更新缓存</div>
+		<div>
+			<span>切换主题</span>
+			<div id="toparea-help-theme-box">
+				<div onclick="OaModule.theme('default')">Default</div>
+				<div onclick="OaModule.theme('bootstrap')">Bootstrap</div>
+				<div onclick="OaModule.theme('gray')">Gray</div>
+				<div onclick="OaModule.theme('metro')">Metro</div>
+				<div onclick="OaModule.theme('black')">Black</div>
+			</div>
+		</div>
+		<div class="menu-sep"></div>
+		<div onclick="$.messager.alert('关于', '版本号：1.0.141007<br /><br />联系QQ：624508914', 'info');">关于</div>
+	</div>
+</div>

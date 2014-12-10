@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><{$page_title}></title>
+<script src="../../../Public/EasyUi/jquery.min.js"></script>
+<script src="../../../Public/Jquery/jquery.cookie.js"></script>
+<script src="../../../Public/EasyUi/jquery.easyui.min.js"></script>
+<script src="../../../Public/EasyUi/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="../../../Public/EasyUi/themes/default/easyui.css" id="theme">
+<link rel="stylesheet" href="../../../Public/EasyUi/themes/icon.css">
+<link rel="stylesheet" href="../../../Public/Css/Oa/main.css">
+</head>
+
+<body class="easyui-layout">
+	<!--System Top-->
+	<div id="north" data-options="region: 'north'" style="height:100px;">
+		<block name="north">
+    		<include file="Public:north" />
+    	</block>
+    </div>
+    <!--System Left-->
+    <div id="west" data-options="region: 'west',title:'欢迎登陆Oa系统',split:true" style="width:150px;">
+    	<block name="west">
+    		<include file="Public:west" />
+    	</block>
+    </div>
+    <!--System Right-->
+    <div id="center" data-options="region:'center'">
+	    <div id="center_tabs">
+        	<div title="系统首页">首页系统内容</div>
+    	</div>
+	</div>
+    <div id="Global_div"></div>
+	<script src="/Public/Js/Oa/main.js"></script>
+</body>
+</html>

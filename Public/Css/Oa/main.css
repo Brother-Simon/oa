@@ -1,0 +1,14 @@
+@charset "utf-8";
+body{background:#e6eef8;padding:0px;margin:0px;}
+/* CSS Document */
+#login form{padding:40px 20px 10px 20px;}
+#login form label{height:38px;overflow:hidden;clear:both;display:block;}
+#login form label span{width:60px;height:38px;display:block;float:left;line-height:23px;}
+#login form label input{width:160px;}
+#login form label img{height:23px;}
+
+#north{background:#428bca;margin-bottom:5px;overflow:hidden;}
+#north .north-category{height:40px;line-height:40px;overflow:hidden;padding:0px 5px;background:#fff;display:block;margin:24px 10px;float:left;border-radius:5px;color:#333;font-family:"微软雅黑";font-size:14px;text-decoration:none;border:2px solid #fff;}
+#north .north-category .l-btn-text{font-size:14px;line-height:40px;}
+#north .north-category:hover,#north .north-category.active{background:#3071a9;color:#fff;transition: background 0.4s;border:2px solid #ccc;}
+#north .north-category:hover .l-btn-text,#north .north-category.active .l-btn-text{font-size:14px;}
