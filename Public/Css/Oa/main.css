@@ -7,8 +7,25 @@ body{background:#e6eef8;padding:0px;margin:0px;}
 #login form label input{width:160px;}
 #login form label img{height:23px;}
 
+
 #north{background:#428bca;margin-bottom:5px;overflow:hidden;}
-#north .north-category{height:40px;line-height:40px;overflow:hidden;padding:0px 5px;background:#fff;display:block;margin:24px 10px;float:left;border-radius:5px;color:#333;font-family:"微软雅黑";font-size:14px;text-decoration:none;border:2px solid #fff;}
+#north #main-title{line-height:100px;font-size:20px;font-family:"微软雅黑";color:#fff;float:left;padding-left:10px;}
+#north #main-module{float:right;}
+#north .north-category{height:40px;line-height:40px;overflow:hidden;padding:0px 5px;background:#fff;display:block;margin:28px 3px 0 3px;float:left;border-radius:5px;color:#333;font-family:"微软雅黑";font-size:13px;text-decoration:none;border:2px solid #fff;}
 #north .north-category .l-btn-text{font-size:14px;line-height:40px;}
 #north .north-category:hover,#north .north-category.active{background:#3071a9;color:#fff;transition: background 0.4s;border:2px solid #ccc;}
 #north .north-category:hover .l-btn-text,#north .north-category.active .l-btn-text{font-size:14px;}
+
+#main_index{list-style: none;padding:0px;margin:10px 0;}
+#main_index li{list-style: none;padding:0px;width:48%;float:left;margin:0 0 0 1.3%;margin-bottom:10px;line-height:25px;}
+#main_index li .panel-body{padding:10px;}
+
+.clearfix:after {
+visibility: hidden;
+display: block;
+font-size: 0;
+content: " ";
+clear: both;
+height: 0;
+}
+.clearfix{*zoom:1;}

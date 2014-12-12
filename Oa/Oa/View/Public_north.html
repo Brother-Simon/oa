@@ -1,4 +1,5 @@
-<div style="float:right;">
+<div id="main-title"><{$Think.config.title}></div>
+<div id="main-module">
 	<foreach name="Apps" item="A" key="k">
 	<a href="javascript:void(0);" data-url='<{:U("Oa/Public/getLeftMenu")}>' data-click='true' class="north-category" data-id="<{$A.id}>"><{$A.title}></a>
 	</foreach>
@@ -28,6 +29,6 @@
 			</div>
 		</div>
 		<div class="menu-sep"></div>
-		<div onclick="$.messager.alert('关于', '版本号：1.0.141007<br /><br />联系QQ：624508914', 'info');">关于</div>
+		<div onclick="$.messager.alert('关于', '版本号：1.0.141211<br /><br />联系QQ：624508914', 'info');">关于</div>
 	</div>
 </div>

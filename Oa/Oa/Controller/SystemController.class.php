@@ -174,7 +174,7 @@ class SystemController extends PublicController{
 			$this->ajaxReturn($msg);
 			exit;
 		}
-		echo "真心要删除ID： ".I(id)." 的规则吗？";
+		echo "真心要删除ID： ".I('id')." 的规则吗？";
 	}
 	/**
 	 * [group 角色列表管理与视图]
@@ -323,6 +323,30 @@ class SystemController extends PublicController{
 		$this->display();
 	}
 	/**
+	 * [deleteGroup 删除角色方法与视图]
+	 * @return [type] [description]
+	 */
+	public function deleteGroup(){
+		if(IS_POST && I('id')){
+			$status = M("AuthGroup")->delete(I('id'));
+			$status2 = M("AuthGroupAccess")->where(array("group_id"=>I('id')))->delete();
+			if($status !== false){
+				$msg = array(
+					"status" => true,
+					"info" => "角色数据成功删除！"
+				);
+			} else {
+				$msg = array(
+					"status" => false,
+					"info" => "角色数据成功失败，请联系管理员！"
+				);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		echo "真心要删除ID： ".I('id')." 的角色吗？";
+	}
+	/**
 	 * [user 用户管理与视图]
 	 * @return [type] [description]
 	 */
@@ -441,7 +465,7 @@ class SystemController extends PublicController{
 		}
 	}
 	/**
-	 * [checkAddGroup 编辑用户方法与视图]
+	 * [editUser 编辑用户方法与视图]
 	 * @return [type] [description]
 	 */
 	public function editUser(){
@@ -495,5 +519,29 @@ class SystemController extends PublicController{
 		$this->UserGroup = implode(",",$UserGroup_tmp);
 		$this->title = "编辑用户";
 		$this->display();
+	}
+	/**
+	 * [deleteUser 删除用户方法与视图]
+	 * @return [type] [description]
+	 */
+	public function deleteUser(){
+		if(IS_POST && I('id')){
+			$status = M("User")->delete(I('id'));
+			$status2 = M("AuthGroupAccess")->where(array("uid"=>I('id')))->delete();
+			if($status !== false){
+				$msg = array(
+					"status" => true,
+					"info" => "用户数据成功删除！"
+				);
+			} else {
+				$msg = array(
+					"status" => false,
+					"info" => "用户数据成功失败，请联系管理员！"
+				);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		echo "真心要删除ID： ".I('id')." 的用户吗？";
 	}
 }

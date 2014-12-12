@@ -19,11 +19,15 @@ function checkPassword(){
 		return false;
 	} else {
 		//用户登录信息处理
-		$data['id'] = $User['id'];
-		$data['logindate'] = time();
-		$data['loginnums'] = $User['loginnums']+1;
-		M('User')->save($data);
+		$ip = new Org\Net\IpLocation('UTFWry.dat'); // 实例化类 参数表示IP地址库文件
+		$location = $ip->getlocation();
+		$location['area'] = $location['area'] == "" ? "本地服务器" : $location['area'];
 
+		$data['uid'] = $User['id'];
+		$data['ip'] = $location['ip'];
+		$data['logindate'] = date("Y-m-d H:i:s",time());
+		$data['logincity'] = $location['area'];
+		M('UserLoginLog')->data($data)->add();
 		//用户登录成功数据处理函数
 		loginSuccess($User);
 	}

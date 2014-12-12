@@ -53,11 +53,11 @@ window.RuleModel = {
 		}
 	},
 	/**
-	 * [is_show 显示字段格式化]
+	 * [isshow 显示字段格式化]
 	 * @param  {[int]}  value [字段值]
 	 * @return {Boolean}       [description]
 	 */
-	is_show: function(value){
+	isshow: function(value){
 		if(value == '1'){
 			return "显示";
 		} else {
@@ -236,7 +236,7 @@ window.RuleModel = {
 			modal: true,
 			href: '<?php echo U("Oa/System/deleteRule");?>'+'/id/'+id,
 			buttons: [{
-				text:"确认编辑",
+				text:"确认删除",
 				iconCls: 'icon-ok',
 				handler:function(){
 					$.ajax({
@@ -296,7 +296,7 @@ $("#System_rule").treegrid({
 		{field:'condition',title:'条件',width:80,formatter:RuleModel.contains,},
 		{field:'type',title:'类型',width:30,formatter:RuleModel.type,},
 		{field:'status',title:'状态',width:20,formatter:RuleModel.status,},
-		{field:'is_show',title:'是否显示',width:20,formatter:RuleModel.is_show,},
+		{field:'isshow',title:'是否显示',width:20,formatter:RuleModel.isshow,},
 		{field:'cls',title:'图标',width:25,formatter:RuleModel.cls},
 		{field:'op',title:'操作',width:60,align:'right',formatter:RuleModel.op}
 	]]

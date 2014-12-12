@@ -58,31 +58,29 @@ window.GroupModel = {
 				text:"添加",
 				iconCls: 'icon-ok',
 				handler:function(){
-					$.messager.progress({text:'处理中，请稍候...'});
-					$("#addGroup").form("submit",{
-						url: "/index.php/Oa/System/addGroup/",
-						ajax:true,
-						onSubmit: function(){
-							var isValid = $(this).form('validate');
-							if (!isValid){
-								$.messager.progress('close');	// 如果表单是无效的则隐藏进度条
-							}
-							return isValid;	// 返回false终止表单提交
+					var isValid = $("#addGroup").form('validate');
+					if (!isValid){
+						return isValid;	// 返回false终止表单提交
+					}
+					$.ajax({
+						type: $("#addGroup").attr("method"),
+						url: $("#addGroup").attr("action"),
+						data:$("#addGroup").serialize(),
+						dataType:"json",
+						beforeSend: function(){
+							$.messager.progress({text:'处理中，请稍候...'});
 						},
 						success: function(msg){
-							$.messager.progress('close');
-							msg = $.parseJSON(msg);
+							$.messager.progress("close");
 							if(!msg.status){
+								$.messager.progress('close');
 								GroupModel.messager(msg.info);
 							} else {
 								$(GroupModel.global).dialog("close");
 								GroupModel.messager(msg.info);
 								GroupModel.refresh();
 							}
-						},
-						queryParams: {
-							addGroup: true,
-						},
+						}
 					});
 				},
 			},{
@@ -107,31 +105,75 @@ window.GroupModel = {
 				text:"确认编辑",
 				iconCls: 'icon-ok',
 				handler:function(){
-					$.messager.progress({text:'处理中，请稍候...'});
-					$("#addGroup").form("submit",{
-						url: '<{:U("Oa/System/editGroup")}>',
-						ajax:true,
-						onSubmit: function(){
-							var isValid = $(this).form('validate');
-							if (!isValid){
-								$.messager.progress('close');	// 如果表单是无效的则隐藏进度条
-							}
-							return isValid;	// 返回false终止表单提交
+					var isValid = $("#editGroup").form('validate');
+					if (!isValid){
+						return isValid;	// 返回false终止表单提交
+					}
+					$.ajax({
+						type: $("#editGroup").attr("method"),
+						url: $("#editGroup").attr("action"),
+						data:$("#editGroup").serialize(),
+						dataType:"json",
+						beforeSend: function(){
+							$.messager.progress({text:'处理中，请稍候...'});
 						},
 						success: function(msg){
-							$.messager.progress('close');
-							msg = $.parseJSON(msg);
+							$.messager.progress("close");
 							if(!msg.status){
+								$.messager.progress('close');
 								GroupModel.messager(msg.info);
 							} else {
 								$(GroupModel.global).dialog("close");
 								GroupModel.messager(msg.info);
 								GroupModel.refresh();
 							}
+						}
+					});
+				},
+			},{
+				text:"取消",
+				iconCls:'icon-cancel',
+				handler:function(){
+					$(GroupModel.global).dialog("close");
+				}
+			}]
+		});
+	},
+	/**
+	 * [delete 删除角色]
+	 * @return {[type]} [description]
+	 */
+	delete: function(id){
+		$(this.global).dialog({
+			title: "确认删除角色",
+			width: 300,
+			height: 120,
+			iconCls: "icon-remove",
+			modal: true,
+			href: '<{:U("Oa/System/deleteGroup")}>'+'/id/'+id,
+			buttons: [{
+				text:"确认删除",
+				iconCls: 'icon-ok',
+				handler:function(){
+					$.ajax({
+						type: "post",
+						url: "<{:U('Oa/System/deleteGroup')}>",
+						data:{id:id},
+						dataType:"json",
+						beforeSend: function(){
+							$.messager.progress({text:'处理中，请稍候...'});
 						},
-						queryParams: {
-							editGroup: true,
-						},
+						success: function(msg){
+							$.messager.progress("close");
+							if(!msg.status){
+								$.messager.progress('close');
+								GroupModel.messager(msg.info);
+							} else {
+								$(GroupModel.global).dialog("close");
+								GroupModel.messager(msg.info);
+								GroupModel.refresh();
+							}
+						}
 					});
 				},
 			},{

@@ -2,12 +2,13 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge" >
 <title><?php echo ($page_title); ?></title>
 <script src="../../../Public/EasyUi/jquery.min.js"></script>
 <script src="../../../Public/Jquery/jquery.cookie.js"></script>
 <script src="../../../Public/EasyUi/jquery.easyui.min.js"></script>
 <script src="../../../Public/EasyUi/locale/easyui-lang-zh_CN.js"></script>
-<link rel="stylesheet" href="../../../Public/EasyUi/themes/default/easyui.css" id="theme">
+<link rel="stylesheet" href="../../../Public/EasyUi/themes/bootstrap/easyui.css" id="theme">
 <link rel="stylesheet" href="../../../Public/EasyUi/themes/icon.css">
 <link rel="stylesheet" href="../../../Public/Css/Oa/main.css">
 </head>

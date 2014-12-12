@@ -9,6 +9,6 @@ class UserModel extends Model{
    	);
    	protected $_auto = array (
 		array('password','md5',3,'function') , // 对password字段在新增和编辑的时候使md5函数处理
-		array('createdate','time',1,'function') , // 对password字段在新增和编辑的时候使md5函数处理
+		array('createdate','time',1,'function') , // 对createdate字段在新增的时候使time函数处理
 	);
 }

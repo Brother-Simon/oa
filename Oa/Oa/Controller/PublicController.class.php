@@ -8,7 +8,7 @@ class PublicController extends CommonController{
 		if(IS_POST){
 			$ModuleWhere = array(
 				"pid" => I("pid"),
-				"is_show" => 1,
+				"isshow" => 1,
 				'id' => array('in',implode(',', session('rules'))),
 			);
 			$Modules = M("AuthRule")->where($ModuleWhere)->order("sort asc")->select();

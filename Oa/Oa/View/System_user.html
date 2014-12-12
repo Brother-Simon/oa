@@ -138,6 +138,52 @@ window.UserModel = {
 				}
 			}]
 		});
+	},
+	/**
+	 * [delete 删除用户]
+	 * @return {[type]} [description]
+	 */
+	delete: function(id){
+		$(this.global).dialog({
+			title: "确认删除规则",
+			width: 300,
+			height: 120,
+			iconCls: "icon-remove",
+			modal: true,
+			href: '<{:U("Oa/System/deleteUser")}>'+'/id/'+id,
+			buttons: [{
+				text:"确认删除",
+				iconCls: 'icon-ok',
+				handler:function(){
+					$.ajax({
+						type: "post",
+						url: "<{:U('Oa/System/deleteUser')}>",
+						data:{id:id},
+						dataType:"json",
+						beforeSend: function(){
+							$.messager.progress({text:'处理中，请稍候...'});
+						},
+						success: function(msg){
+							$.messager.progress("close");
+							if(!msg.status){
+								$.messager.progress('close');
+								UserModel.messager(msg.info);
+							} else {
+								$(UserModel.global).dialog("close");
+								UserModel.messager(msg.info);
+								UserModel.refresh();
+							}
+						}
+					});
+				},
+			},{
+				text:"取消",
+				iconCls:'icon-cancel',
+				handler:function(){
+					$(UserModel.global).dialog("close");
+				}
+			}]
+		});
 	}
 
 }

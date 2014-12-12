@@ -2,12 +2,13 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge" >
 <title><{$page_title}></title>
 <script src="../../../Public/EasyUi/jquery.min.js"></script>
 <script src="../../../Public/Jquery/jquery.cookie.js"></script>
 <script src="../../../Public/EasyUi/jquery.easyui.min.js"></script>
 <script src="../../../Public/EasyUi/locale/easyui-lang-zh_CN.js"></script>
-<link rel="stylesheet" href="../../../Public/EasyUi/themes/default/easyui.css" id="theme">
+<link rel="stylesheet" href="../../../Public/EasyUi/themes/bootstrap/easyui.css" id="theme">
 <link rel="stylesheet" href="../../../Public/EasyUi/themes/icon.css">
 <link rel="stylesheet" href="../../../Public/Css/Oa/main.css">
 </head>
@@ -28,7 +29,62 @@
     <!--System Right-->
     <div id="center" data-options="region:'center'">
 	    <div id="center_tabs">
-        	<div title="系统首页">首页系统内容</div>
+        	<div title="系统首页">
+                <ul id="main_index">
+                    <li>
+                        <div class="easyui-panel" title="我的个人信息">
+                            您好，<{$Think.session.user.username}><br />
+                            所属角色：<br />
+                            最后登录时间：<br />
+                            最后登录IP：<br />
+                            最后登录地点：<br />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="easyui-panel" title="安全提示信息">
+                            网站上线后建议关闭DEBUG调试模式<br />
+                            建议开启后台日志记录功能<br />
+                            建议开启单点登录功能
+                        </div>
+                    </li>
+                    <div class="clearfix"></div>
+                    <li>
+                        <div class="easyui-panel" title="服务器参数">
+                            服务器域名/IP地址：<?php echo  $_SERVER['HTTP_HOST'];?>(<?php echo $_SERVER['SERVER_ADDR'];?>) <br>
+                            服务器标识：<?php echo  php_uname();?> <br>
+                            服务器操作系统：<?php echo  php_uname('s');?><br>
+                            服务器解译引擎：<?php echo $_SERVER['SERVER_SOFTWARE'];?> <br>
+                            服务器语言：<?php echo $_SERVER['HTTP_ACCEPT_LANGUAGE'];?><br>
+                            服务器端口：<?php echo $_SERVER['SERVER_PORT'];?> <br>
+                            管理员邮箱：624508914@qq.com <br>
+                            绝对路径：<?php echo $_SERVER['DOCUMENT_ROOT'];?><br>
+                            上传文件最大限制（upload_max_filesize）：<?php echo ini_get('upload_max_filesize');?>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="easyui-panel" title="系统说明">
+                            版本号：1.0.141211[开发版] （联系QQ：624508914）<br>
+                            本系统采用ThinkPHP 3.2.2 + jQuery easyUI 1.4.1 开发<br>
+                            Github开源地址：https://github.com/624508914/oa<br>
+                            二次开发参考手册：<br>
+                            http://doc.thinkphp.cn/<br>
+                            http://jeasyui.com/documentation/
+                        </div>
+                    </li>
+                    <div class="clearfix"></div>
+                    <li>
+                        <div class="easyui-panel" title="更新日志">
+                            [2014-12-11]<br />
+                            1、后台核心权限功能开发完成
+                        </div>
+                    </li>
+                    <li>
+                        <div class="easyui-panel" title="支付宝捐赠">
+                            <img src="/Public/Images/alipay.png" width="250" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
     	</div>
 	</div>
     <div id="Global_div"></div>

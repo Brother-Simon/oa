@@ -23,6 +23,6 @@ return array(
 	'SESSION_TYPE'		=> 'Db',
 
 	'TITLE'				=> '医疗OA管理系统',
-
+	'Administrator'		=> '1'
 
 );
