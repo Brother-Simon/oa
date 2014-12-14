@@ -47,17 +47,7 @@ class SystemController extends PublicController{
 				);
 			} else {
 				$status = $AuthRule->add();
-				if($status){
-					$msg = array(
-						"status" => true,
-						"info" => "规则添加成功"
-					);
-				} else {
-					$msg = array(
-						"status" => false,
-						"info" => "规则添加失败,未知原因，请联系管理员"
-					);
-				}
+				$msg = doReturn("规则添加成功","规则添加失败,未知原因，请联系管理员",$status);
 			}
 			$this->ajaxReturn($msg);
 			exit;
@@ -112,17 +102,7 @@ class SystemController extends PublicController{
 				);
 			} else {
 				$status = $AuthRule->save();
-				if($status !== false){
-					$msg = array(
-						"status" => true,
-						"info" => "规则编辑成功"
-					);
-				} else {
-					$msg = array(
-						"status" => false,
-						"info" => "规则编辑失败,未知原因，请联系管理员"
-					);
-				}
+				$msg = doReturn("规则编辑成功","规则编辑失败,未知原因，请联系管理员",$status);
 			}
 			$this->ajaxReturn($msg);
 			exit;
@@ -160,17 +140,7 @@ class SystemController extends PublicController{
 	public function deleteRule(){
 		if(IS_POST && I('id')){
 			$status = M("AuthRule")->delete(I('id'));
-			if($status !== false){
-				$msg = array(
-					"status" => true,
-					"info" => "规则数据成功删除！"
-				);
-			} else {
-				$msg = array(
-					"status" => false,
-					"info" => "规则数据成功失败，请联系管理员！"
-				);
-			}
+			$msg = doReturn("规则数据成功删除","规则数据成功失败，请联系管理员",$status);
 			$this->ajaxReturn($msg);
 			exit;
 		}
@@ -230,17 +200,7 @@ class SystemController extends PublicController{
 			} else {
 				$AuthGroup->rules = implode(",",$AuthGroup->rules);
 				$status = $AuthGroup->add();
-				if($status){
-					$msg = array(
-						"status" => true,
-						"info" => "角色添加成功"
-					);
-				} else {
-					$msg = array(
-						"status" => false,
-						"info" => "角色添加失败,未知原因，请联系管理员"
-					);
-				}
+				$msg = doReturn("角色添加成功","角色添加失败,未知原因，请联系管理员",$status);
 			}
 			$this->ajaxReturn($msg);
 			exit;
@@ -301,17 +261,7 @@ class SystemController extends PublicController{
 			} else {
 				$AuthGroup->rules = implode(",",$AuthGroup->rules);
 				$status = $AuthGroup->save();
-				if($status !== false){
-					$msg = array(
-						"status" => true,
-						"info" => "角色编辑成功"
-					);
-				} else {
-					$msg = array(
-						"status" => false,
-						"info" => "角色编辑失败,未知原因，请联系管理员"
-					);
-				}
+				$msg = doReturn("角色编辑成功","角色编辑失败,未知原因，请联系管理员",$status);
 			}
 			$this->ajaxReturn($msg);
 			exit;
@@ -329,18 +279,9 @@ class SystemController extends PublicController{
 	public function deleteGroup(){
 		if(IS_POST && I('id')){
 			$status = M("AuthGroup")->delete(I('id'));
-			$status2 = M("AuthGroupAccess")->where(array("group_id"=>I('id')))->delete();
-			if($status !== false){
-				$msg = array(
-					"status" => true,
-					"info" => "角色数据成功删除！"
-				);
-			} else {
-				$msg = array(
-					"status" => false,
-					"info" => "角色数据成功失败，请联系管理员！"
-				);
-			}
+			//同步删除组用户表权限节点信息
+			M("AuthGroupAccess")->where(array("group_id"=>I('id')))->delete();
+			$msg = doReturn("角色数据成功删除","角色数据成功失败，请联系管理员",$status);
 			$this->ajaxReturn($msg);
 			exit;
 		}
@@ -530,18 +471,9 @@ class SystemController extends PublicController{
 	public function deleteUser(){
 		if(IS_POST && I('id')){
 			$status = M("User")->delete(I('id'));
-			$status2 = M("AuthGroupAccess")->where(array("uid"=>I('id')))->delete();
-			if($status !== false){
-				$msg = array(
-					"status" => true,
-					"info" => "用户数据成功删除！"
-				);
-			} else {
-				$msg = array(
-					"status" => false,
-					"info" => "用户数据删除失败，请联系管理员！"
-				);
-			}
+			//同步删除组用户权限表信息
+			M("AuthGroupAccess")->where(array("uid"=>I('id')))->delete();
+			$msg = doReturn("用户数据成功删除","用户数据删除失败，请联系管理员",$status);
 			$this->ajaxReturn($msg);
 			exit;
 		}
@@ -578,17 +510,7 @@ class SystemController extends PublicController{
 				);
 			} else {
 				$status = $Hospital->add();
-				if($status){
-					$msg = array(
-						"status" => true,
-						"info" => "医院添加成功"
-					);
-				} else {
-					$msg = array(
-						"status" => false,
-						"info" => "医院添加失败,未知原因，请联系管理员"
-					);
-				}
+				$msg = doReturn("医院添加成功","医院添加失败,未知原因，请联系管理员",$status);
 			}
 			$this->ajaxReturn($msg);
 			exit;
@@ -610,17 +532,7 @@ class SystemController extends PublicController{
 				);
 			} else {
 				$status = $Hospital->save();
-				if($status !== false){
-					$msg = array(
-						"status" => true,
-						"info" => "医院编辑成功"
-					);
-				} else {
-					$msg = array(
-						"status" => false,
-						"info" => "医院编辑失败,未知原因，请联系管理员"
-					);
-				}
+				$msg = doReturn("医院编辑成功","医院编辑失败,未知原因，请联系管理员",$status);
 			}
 			$this->ajaxReturn($msg);
 			exit;
@@ -637,20 +549,77 @@ class SystemController extends PublicController{
 	public function deleteHospital(){
 		if(IS_POST && I('id')){
 			$status = M("Hospital")->delete(I('id'));
-			if($status !== false){
-				$msg = array(
-					"status" => true,
-					"info" => "医院数据成功删除！"
-				);
-			} else {
-				$msg = array(
-					"status" => false,
-					"info" => "医院数据删除失败，请联系管理员！"
-				);
-			}
+			$msg = doReturn("医院数据成功删除","医院数据删除失败，请联系管理员",$status);
 			$this->ajaxReturn($msg);
 			exit;
 		}
 		echo "真心要删除ID： ".I('id')." 的医院吗？";
+	}
+	/**
+	 * [hospitalDoctor 医生管理视图与方法]
+	 * @return [type] [description]
+	 */
+	public function hospitalDoctor(){
+		$this->title = '医生管理';
+		$this->display();
+	}
+	/**
+	 * [addHospital 添加医生视图与方法]
+	 * @return [type] [description]
+	 */
+	public function addHospitalDoctor(){
+		if(IS_POST && I("addHospitalDoctor")){
+			$HospitalDoctor = M("HospitalDoctor");
+			if(!$HospitalDoctor->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "医生数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$status = $HospitalDoctor->add();
+				$msg = doReturn("医生添加成功","医生添加失败,未知原因，请联系管理员",$status);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$this->title = '添加医生';
+		$this->display();
+	}
+	/**
+	 * [editHospital 编辑医生视图与方法]
+	 * @return [type] [description]
+	 */
+	public function editHospitalDoctor(){
+		if(IS_POST && I("editHospitalDoctor")){
+			$HospitalDoctor = M("HospitalDoctor");
+			if(!$HospitalDoctor->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "医生数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$status = $HospitalDoctor->save();
+				$msg = doReturn("医生信息成功编辑","医生信息编辑失败,未知原因，请联系管理员",$status);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$id = I('id',0,'intval');
+		$this->HospitalDoctor = M("HospitalDoctor")->find($id);
+		$this->title = '编辑医生';
+		$this->display();
+	}
+	/**
+	 * [deleteHospitalDoctor 删除医生视图与方法]
+	 * @return [type] [description]
+	 */
+	public function deleteHospitalDoctor(){
+		if(IS_POST && I('id')){
+			$status = M("HospitalDoctor")->delete(I('id'));
+			$msg = doReturn("医生数据成功删除","医生数据删除失败，请联系管理员",$status);
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		echo "真心要删除ID： ".I('id')." 的医生吗？";
 	}
 }

@@ -105,3 +105,24 @@ function getUsergroup(){
 	}
 	return $Usergroup;
 }
+/**
+ * [doReturn 返回前端ajax处理数据结果]
+ * @param  string $success [成功信息]
+ * @param  string $error   [失败信息]
+ * @param  [type] $status  [处理数据结果]
+ * @return [type]          [description]
+ */
+function doReturn($success = '成功',$error = '失败',$status){
+	if($status !== false){
+		$msg = array(
+			"status" => true,
+			"info" => $success
+		);
+	} else {
+		$msg = array(
+			"status" => false,
+			"info" => $error
+		);
+	}
+	return $msg;
+}
