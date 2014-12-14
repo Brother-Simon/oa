@@ -34,10 +34,10 @@
                     <li>
                         <div class="easyui-panel" title="我的个人信息">
                             您好，<{$Think.session.user.username}><br />
-                            所属角色：<br />
-                            最后登录时间：<br />
-                            最后登录IP：<br />
-                            最后登录地点：<br />
+                            所属角色：<{$Think.session.login_info.groups}><br />
+                            最后登录时间：<{$Think.session.login_info.logindate}><br />
+                            最后登录IP：<{$Think.session.login_info.ip}><br />
+                            最后登录地点：<{$Think.session.login_info.logincity}><br />
                         </div>
                     </li>
                     <li>
@@ -68,12 +68,18 @@
                             Github开源地址：https://github.com/624508914/oa<br>
                             二次开发参考手册：<br>
                             http://doc.thinkphp.cn/<br>
-                            http://jeasyui.com/documentation/
+                            http://jeasyui.com/documentation/<br />
+                            站长广告支持：<a href="http://www.0796z.com" target="_blank">吉安站</a><br />
+                            点击链接加入群【医院OA系统-官方1群】：<a href="http://jq.qq.com/?_wv=1027&k=a99RHS" target="_blank">http://jq.qq.com/?_wv=1027&k=a99RHS</a>
                         </div>
                     </li>
                     <div class="clearfix"></div>
                     <li>
                         <div class="easyui-panel" title="更新日志">
+                            [2014-12-14]<br />
+                            1、后台医院设置->医院管理功能开发完成<br />
+                            [2014-12-13]<br />
+                            1、后台核心权限功能细节与样式优化<br />
                             [2014-12-11]<br />
                             1、后台核心权限功能开发完成
                         </div>

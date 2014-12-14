@@ -33,19 +33,19 @@ window.GroupModel = {
 	//状态格式化
 	status: function(value){
 		if(value == '1'){
-			return "启用";
+			return "<a href='javascript:;' class='icon-block icon-ok'>  </a>";
 		} else {
-			return "禁用";
+			return "<a href='javascript:;' class='icon-block icon-no'> </a>";
 		}
 	},
 	//操作格式化
 	op: function(value){
 		var btn = [];
-		btn.push('<a href="javascript:;" onclick="GroupModel.edit('+value+')">修改</a>');
-		btn.push('<a href="javascript:;" onclick="GroupModel.delete('+value+')">删除</a>');
-		return btn.join(' | ');
+		btn.push('<a href="javascript:;" class="icon-block icon-page_white_edit" onclick="GroupModel.edit('+value+')"> </a>');
+		btn.push('<a href="javascript:;" class="icon-block icon-arrow_cross" onclick="GroupModel.delete('+value+')"> </a>');
+		return btn.join('');
 	},
-	//规则添加
+	//角色添加
 	add: function(){
 		$(this.global).dialog({
 			title: '添加角色',
@@ -80,6 +80,9 @@ window.GroupModel = {
 								GroupModel.messager(msg.info);
 								GroupModel.refresh();
 							}
+						},
+						error: function(){
+							$.messager.progress("close");
 						}
 					});
 				},
@@ -92,7 +95,7 @@ window.GroupModel = {
 			}]
 		});
 	},
-	//规则添加
+	//角色添加
 	edit: function(id){
 		$(this.global).dialog({
 			title: '编辑角色',
@@ -127,6 +130,9 @@ window.GroupModel = {
 								GroupModel.messager(msg.info);
 								GroupModel.refresh();
 							}
+						},
+						error: function(){
+							$.messager.progress("close");
 						}
 					});
 				},
@@ -173,6 +179,9 @@ window.GroupModel = {
 								GroupModel.messager(msg.info);
 								GroupModel.refresh();
 							}
+						},
+						error: function(){
+							$.messager.progress("close");
 						}
 					});
 				},

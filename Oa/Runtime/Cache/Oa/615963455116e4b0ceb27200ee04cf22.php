@@ -17,7 +17,7 @@ window.RuleModel = {
 	 */
 	toolbar: [
 		{ text: '添加', iconCls: 'icon-add', handler: function(){RuleModel.add();} },
-		{ text: '排序', iconCls: 'icon-reload', handler: function(){RuleModel.order();} },
+		{ text: '排序', iconCls: 'icon-arrow_merge', handler: function(){RuleModel.order();} },
 		{ text: '刷新', iconCls: 'icon-reload', handler: function(){RuleModel.refresh();} },
 	],
 	/**
@@ -47,9 +47,9 @@ window.RuleModel = {
 	 */
 	status: function(value){
 		if(value == '1'){
-			return "启用";
+			return "<a href='javascript:;' class='icon-block icon-ok'>  </a>";
 		} else {
-			return "禁用";
+			return "<a href='javascript:;' class='icon-block icon-no'> </a>";
 		}
 	},
 	/**
@@ -59,9 +59,9 @@ window.RuleModel = {
 	 */
 	isshow: function(value){
 		if(value == '1'){
-			return "显示";
+			return "<a href='javascript:;' class='icon-block icon-ok'>  </a>";
 		} else {
-			return "隐藏";
+			return "<a href='javascript:;' class='icon-block icon-no'> </a>";
 		}
 	},
 	/**
@@ -80,10 +80,10 @@ window.RuleModel = {
 	 */
 	op: function(value){
 		var btn = [];
-		btn.push('<a href="javascript:;" onclick="RuleModel.add('+value+')">添加子规则</a>');
-		btn.push('<a href="javascript:;" onclick="RuleModel.edit('+value+')">修改</a>');
-		btn.push('<a href="javascript:;" onclick="RuleModel.delete('+value+')">删除</a>');
-		return btn.join(' | ');
+		btn.push('<a href="javascript:;" class="icon-block icon-arrow_add" onclick="RuleModel.add('+value+')"></a>');
+		btn.push('<a href="javascript:;" class="icon-block icon-page_white_edit" onclick="RuleModel.edit('+value+')"></a>');
+		btn.push('<a href="javascript:;" class="icon-block icon-arrow_cross" onclick="RuleModel.delete('+value+')"></a>');
+		return btn.join('');
 	},
 	/**
 	 * [messager 公用弹窗]
@@ -163,6 +163,9 @@ window.RuleModel = {
 								RuleModel.messager(msg.info);
 								RuleModel.refresh();
 							}
+						},
+						error: function(){
+							$.messager.progress("close");
 						}
 					});
 				},
@@ -211,6 +214,9 @@ window.RuleModel = {
 								RuleModel.messager(msg.info);
 								RuleModel.refresh();
 							}
+						},
+						error: function(){
+							$.messager.progress("close");
 						}
 					});
 				},
@@ -257,6 +263,9 @@ window.RuleModel = {
 								RuleModel.messager(msg.info);
 								RuleModel.refresh();
 							}
+						},
+						error: function(){
+							$.messager.progress("close");
 						}
 					});
 				},

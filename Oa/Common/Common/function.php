@@ -47,6 +47,21 @@ function getUserSession(){
 	//记录登录用户规则信息
 	session("gid",$Gids);
     session("rules",$Rules);
+
+    //获取登录用户系统首页信息
+	$user_login_log = M("UserLoginLog")->order('id desc')->find($User['id']);
+
+    foreach($Gids as $t_k => $t_v){
+    	$login_groups = M("AuthGroup")->find($t_v['group_id']);
+    	$tmp_login_info[] = $login_groups['title'];
+	}
+
+	$login_info['groups'] = implode(',', $tmp_login_info);
+	$login_info['logindate'] = $user_login_log['logindate'];
+	$login_info['ip'] = $user_login_log['ip'];
+	$login_info['logincity'] = $user_login_log['logincity'];
+
+    session("login_info",$login_info);
 }
 /**
  * [treeRules 递归获取规则树]

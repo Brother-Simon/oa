@@ -33,17 +33,18 @@ window.UserModel = {
 	//状态格式化
 	status: function(value){
 		if(value == '1'){
-			return '<span class="icon-ok" style="padding:0px 5px;">&nbsp;</span>';
+			return "<a href='javascript:;' class='icon-block icon-ok'>  </a>";
 		} else {
-			return '<span class="icon-cancel" style="padding:3px 5px;">&nbsp;</span>';
+			return "<a href='javascript:;' class='icon-block icon-no'> </a>";
 		}
 	},
 	//操作格式化
 	op: function(value){
 		var btn = [];
-		btn.push('<a href="javascript:;" onclick="UserModel.edit('+value+')">修改</a>');
-		btn.push('<a href="javascript:;" onclick="UserModel.delete('+value+')">删除</a>');
-		return btn.join(' | ');
+		var btn = [];
+		btn.push('<a href="javascript:;" class="icon-block icon-page_white_edit" onclick="UserModel.edit('+value+')"> </a>');
+		btn.push('<a href="javascript:;" class="icon-block icon-arrow_cross" onclick="UserModel.delete('+value+')"> </a>');
+		return btn.join('');
 	},
 	//规则添加
 	add: function(){
@@ -80,6 +81,9 @@ window.UserModel = {
 								UserModel.messager(msg.info);
 								UserModel.refresh();
 							}
+						},
+						error: function(){
+							$.messager.progress("close");
 						}
 					});
 				},
@@ -127,6 +131,9 @@ window.UserModel = {
 								UserModel.messager(msg.info);
 								UserModel.refresh();
 							}
+						},
+						error: function(){
+							$.messager.progress("close");
 						}
 					});
 				},
@@ -173,6 +180,9 @@ window.UserModel = {
 								UserModel.messager(msg.info);
 								UserModel.refresh();
 							}
+						},
+						error: function(){
+							$.messager.progress("close");
 						}
 					});
 				},

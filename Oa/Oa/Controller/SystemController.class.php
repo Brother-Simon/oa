@@ -112,7 +112,7 @@ class SystemController extends PublicController{
 				);
 			} else {
 				$status = $AuthRule->save();
-				if($status){
+				if($status !== false){
 					$msg = array(
 						"status" => true,
 						"info" => "规则编辑成功"
@@ -301,7 +301,7 @@ class SystemController extends PublicController{
 			} else {
 				$AuthGroup->rules = implode(",",$AuthGroup->rules);
 				$status = $AuthGroup->save();
-				if($status){
+				if($status !== false){
 					$msg = array(
 						"status" => true,
 						"info" => "角色编辑成功"
@@ -352,7 +352,7 @@ class SystemController extends PublicController{
 	 */
 	public function user(){
 		if(IS_POST){
-			$Users = M('User')->field("id,username,name,qq,tel,logindate,loginnums,status,id as op")->page(I('page'),I('rows'))->select();
+			$Users = M('User')->field("id,username,name,qq,tel,status,id as op")->page(I('page'),I('rows'))->select();
 			//遍历循环用户所属组
 			foreach($Users as $k => $v){
 				//初始化用户所属组信息
@@ -365,7 +365,9 @@ class SystemController extends PublicController{
 					$Users_tmp[] = $Groups['title'];
 				}
 				$Users[$k]['usergroup'] = implode(',',$Users_tmp);
-				$Users[$k]['logindate'] = date("Y-m-d H:i:s",$Users[$k]['logindate']);
+				$User_login_log = M("UserLoginLog")->order("id desc")->where(array('uid'=>$Users[$k]['id']))->find();
+				$Users[$k]['logindate'] = $User_login_log['logindate'];
+				$Users[$k]['loginnums'] = M("UserLoginLog")->where(array('uid'=>$Users[$k]['id']))->count();
 			}
 			$Data = array(
 				'total' => M('User')->count(),
@@ -374,6 +376,7 @@ class SystemController extends PublicController{
 			$this->ajaxReturn($Data);
 			exit;
 		}
+		$this->title = '用户管理';
 		$this->display();
 	}
 	/**
@@ -536,12 +539,118 @@ class SystemController extends PublicController{
 			} else {
 				$msg = array(
 					"status" => false,
-					"info" => "用户数据成功失败，请联系管理员！"
+					"info" => "用户数据删除失败，请联系管理员！"
 				);
 			}
 			$this->ajaxReturn($msg);
 			exit;
 		}
 		echo "真心要删除ID： ".I('id')." 的用户吗？";
+	}
+	/**
+	 * [hospital 医院管理与视图]
+	 * @return [type] [description]
+	 */
+	public function hospital(){
+		if(IS_POST){
+			$Hospital = M('Hospital')->field('id,title,description,status,id as op')->page(I('page'),I('rows'))->select();
+			$Data = array(
+				'total' => M('Hospital')->count(),
+				'rows' => $Hospital
+			);
+			$this->ajaxReturn($Data);
+			exit;
+		}
+		$this->title = '医院管理';
+		$this->display();
+	}
+	/**
+	 * [addHospital 添加医院视图与方法]
+	 * @return [type] [description]
+	 */
+	public function addHospital(){
+		if(IS_POST && I("addHospital")){
+			$Hospital = M("Hospital");
+			if(!$Hospital->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "医院数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$status = $Hospital->add();
+				if($status){
+					$msg = array(
+						"status" => true,
+						"info" => "医院添加成功"
+					);
+				} else {
+					$msg = array(
+						"status" => false,
+						"info" => "医院添加失败,未知原因，请联系管理员"
+					);
+				}
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$this->title = '添加医院';
+		$this->display();
+	}
+	/**
+	 * [editHospital 编辑医院视图与方法]
+	 * @return [type] [description]
+	 */
+	public function editHospital(){
+		if(IS_POST && I("editHospital")){
+			$Hospital = M("Hospital");
+			if(!$Hospital->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "医院数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$status = $Hospital->save();
+				if($status !== false){
+					$msg = array(
+						"status" => true,
+						"info" => "医院编辑成功"
+					);
+				} else {
+					$msg = array(
+						"status" => false,
+						"info" => "医院编辑失败,未知原因，请联系管理员"
+					);
+				}
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$id = I('id',0,'intval');
+		$this->Hospital = M("Hospital")->find($id);
+		$this->title = '编辑医院';
+		$this->display();
+	}
+	/**
+	 * [deleteHospital 删除医院视图与方法]
+	 * @return [type] [description]
+	 */
+	public function deleteHospital(){
+		if(IS_POST && I('id')){
+			$status = M("Hospital")->delete(I('id'));
+			if($status !== false){
+				$msg = array(
+					"status" => true,
+					"info" => "医院数据成功删除！"
+				);
+			} else {
+				$msg = array(
+					"status" => false,
+					"info" => "医院数据删除失败，请联系管理员！"
+				);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		echo "真心要删除ID： ".I('id')." 的医院吗？";
 	}
 }

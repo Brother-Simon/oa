@@ -65,10 +65,10 @@
                     <li>
                         <div class="easyui-panel" title="我的个人信息">
                             您好，<?php echo ($_SESSION['user']['username']); ?><br />
-                            所属角色：<br />
-                            最后登录时间：<br />
-                            最后登录IP：<br />
-                            最后登录地点：<br />
+                            所属角色：<?php echo ($_SESSION['login_info']['groups']); ?><br />
+                            最后登录时间：<?php echo ($_SESSION['login_info']['logindate']); ?><br />
+                            最后登录IP：<?php echo ($_SESSION['login_info']['ip']); ?><br />
+                            最后登录地点：<?php echo ($_SESSION['login_info']['logincity']); ?><br />
                         </div>
                     </li>
                     <li>
@@ -81,7 +81,7 @@
                     <div class="clearfix"></div>
                     <li>
                         <div class="easyui-panel" title="服务器参数">
-                            服务器域名/IP地址：<?php echo $_SERVER['HTTP_HOST'];?>(<?php echo get_client_ip();?>) <br>
+                            服务器域名/IP地址：<?php echo $_SERVER['HTTP_HOST'];?>(<?php echo $_SERVER['SERVER_ADDR'];?>) <br>
                             服务器标识：<?php echo php_uname();?> <br>
                             服务器操作系统：<?php echo php_uname('s');?><br>
                             服务器解译引擎：<?php echo $_SERVER['SERVER_SOFTWARE'];?> <br>
@@ -96,14 +96,19 @@
                         <div class="easyui-panel" title="系统说明">
                             版本号：1.0.141211[开发版] （联系QQ：624508914）<br>
                             本系统采用ThinkPHP 3.2.2 + jQuery easyUI 1.4.1 开发<br>
+                            Github开源地址：https://github.com/624508914/oa<br>
                             二次开发参考手册：<br>
                             http://doc.thinkphp.cn/<br>
-                            http://jeasyui.com/documentation/
+                            http://jeasyui.com/documentation/<br />
+                            站长广告支持：<a href="http://www.0796z.com" target="_blank">吉安站</a><br />
+                            点击链接加入群【医院OA系统-官方1群】：<a href="http://jq.qq.com/?_wv=1027&k=a99RHS" target="_blank">http://jq.qq.com/?_wv=1027&k=a99RHS</a>
                         </div>
                     </li>
                     <div class="clearfix"></div>
                     <li>
                         <div class="easyui-panel" title="更新日志">
+                            [2014-12-13]<br />
+                            1、后台核心权限功能细节与样式优化<br />
                             [2014-12-11]<br />
                             1、后台核心权限功能开发完成
                         </div>

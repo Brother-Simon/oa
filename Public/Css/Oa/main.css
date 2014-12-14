@@ -29,3 +29,5 @@ clear: both;
 height: 0;
 }
 .clearfix{*zoom:1;}
+
+#Global_div{padding:10px;}

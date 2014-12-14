@@ -1,3 +1,4 @@
+.icon-block{padding:1px 8px;margin:0px 0px 0px 10px;}
 .icon-blank{
 	background:url('icons/blank.gif') no-repeat center center;
 }
@@ -90,4 +91,22 @@
 }
 .icon-large-chart{
 	background:url('icons/large_chart.png') no-repeat center center;
+}
+.icon-arrow_accept{
+	background:url('icons/arrow/accept.png') no-repeat center center;
+}
+.icon-arrow_add{
+	background:url('icons/arrow/add.png') no-repeat center center;
+}
+.icon-arrow_branch{
+	background:url('icons/arrow/arrow_branch.png') no-repeat center center;
+}
+.icon-arrow_cross{
+	background:url('icons/arrow/cross.png') no-repeat center center;
+}
+.icon-arrow_merge{
+	background:url('icons/arrow/arrow_merge.png') no-repeat center center;
+}
+.icon-page_white_edit{
+	background:url('icons/page/page_white_edit.png') no-repeat center center;
 }
