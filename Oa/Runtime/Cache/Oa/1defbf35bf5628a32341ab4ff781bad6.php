@@ -1,11 +1,11 @@
-<?php if (!defined('THINK_PATH')) exit();?><table id="System_group"></table>
+<?php if (!defined('THINK_PATH')) exit();?><table id="System_hospitalDoctor"></table>
 <script type="text/javascript">
-window.GroupModel = {
+window.HospitalDoctorModel = {
 	/**
-	 * [group 角色对象容器]
+	 * [hospitalDoctor 医生对象容器]
 	 * @type {String}
 	 */
-	group: "#System_group",
+	hospitalDoctor: "#System_hospitalDoctor",
 	/**
 	 * [global 全局模态框DIV]
 	 * @type {String}
@@ -13,8 +13,8 @@ window.GroupModel = {
 	global: "#Global_div",
 	//工具栏
 	toolbar: [
-		{ text: '添加角色', iconCls: 'icon-add', handler: function(){GroupModel.add();} },
-		{ text: '刷新', iconCls: 'icon-reload', handler: function(){GroupModel.refresh();} },
+		{ text: '添加医生', iconCls: 'icon-add', handler: function(){HospitalDoctorModel.add();} },
+		{ text: '刷新', iconCls: 'icon-reload', handler: function(){HospitalDoctorModel.refresh();} },
 	],
 	//右下角弹窗提示
 	messager: function(info,title,time){
@@ -31,42 +31,34 @@ window.GroupModel = {
 		var tab = $("#center_tabs").tabs("getSelected");
 		tab.panel("refresh",tab[0]['baseUrl']);
 	},
-	//状态格式化
-	status: function(value){
-		if(value == '1'){
-			return "<a href='javascript:;' class='icon-block icon-ok'>  </a>";
-		} else {
-			return "<a href='javascript:;' class='icon-block icon-no'> </a>";
-		}
-	},
 	//操作格式化
 	op: function(value){
 		var btn = [];
-		btn.push('<a href="javascript:;" class="icon-block icon-page_white_edit" onclick="GroupModel.edit('+value+')"> </a>');
-		btn.push('<a href="javascript:;" class="icon-block icon-arrow_cross" onclick="GroupModel.delete('+value+')"> </a>');
+		btn.push('<a href="javascript:;" class="icon-block icon-page_white_edit" onclick="HospitalDoctorModel.edit('+value+')"> </a>');
+		btn.push('<a href="javascript:;" class="icon-block icon-arrow_cross" onclick="HospitalDoctorModel.delete('+value+')"> </a>');
 		return btn.join('');
 	},
-	//角色添加
+	//医生添加
 	add: function(){
 		$(this.global).dialog({
-			title: '添加角色',
+			title: '添加医生',
 			width: 300,
 			height: 200,
 			iconCls: 'icon-add',
-			href: '/index.php/Oa/System/addGroup/',
+			href: '<?php echo U("Oa/System/addHospitalDoctor");?>',
 			modal: true,
 			buttons: [{
 				text:"添加",
 				iconCls: 'icon-ok',
 				handler:function(){
-					var isValid = $("#addGroup").form('validate');
+					var isValid = $("#addHospitalDoctor").form('validate');
 					if (!isValid){
 						return isValid;	// 返回false终止表单提交
 					}
 					$.ajax({
-						type: $("#addGroup").attr("method"),
-						url: $("#addGroup").attr("action"),
-						data:$("#addGroup").serialize(),
+						type: $("#addHospitalDoctor").attr("method"),
+						url: $("#addHospitalDoctor").attr("action"),
+						data:$("#addHospitalDoctor").serialize(),
 						dataType:"json",
 						beforeSend: function(){
 							$.messager.progress({text:'处理中，请稍候...'});
@@ -75,11 +67,11 @@ window.GroupModel = {
 							$.messager.progress("close");
 							if(!msg.status){
 								$.messager.progress('close');
-								GroupModel.messager(msg.info);
+								HospitalDoctorModel.messager(msg.info);
 							} else {
-								$(GroupModel.global).dialog("close");
-								GroupModel.messager(msg.info);
-								GroupModel.refresh();
+								$(HospitalDoctorModel.global).dialog("close");
+								HospitalDoctorModel.messager(msg.info);
+								HospitalDoctorModel.refresh();
 							}
 						},
 						error: function(){
@@ -91,32 +83,32 @@ window.GroupModel = {
 				text:"取消",
 				iconCls:'icon-cancel',
 				handler:function(){
-					$(GroupModel.global).dialog("close");
+					$(HospitalDoctorModel.global).dialog("close");
 				}
 			}]
 		});
 	},
-	//角色添加
+	//医生添加
 	edit: function(id){
 		$(this.global).dialog({
-			title: '编辑角色',
+			title: '编辑医生',
 			width: 300,
-			height: 370,
+			height: 220,
 			iconCls: 'icon-add',
-			href: '<?php echo U("Oa/System/editGroup");?>/id/'+id,
+			href: '<?php echo U("Oa/System/editHospitalDoctor");?>/id/'+id,
 			modal: true,
 			buttons: [{
 				text:"确认编辑",
 				iconCls: 'icon-ok',
 				handler:function(){
-					var isValid = $("#editGroup").form('validate');
+					var isValid = $("#editHospitalDoctor").form('validate');
 					if (!isValid){
 						return isValid;	// 返回false终止表单提交
 					}
 					$.ajax({
-						type: $("#editGroup").attr("method"),
-						url: $("#editGroup").attr("action"),
-						data:$("#editGroup").serialize(),
+						type: $("#editHospitalDoctor").attr("method"),
+						url: $("#editHospitalDoctor").attr("action"),
+						data:$("#editHospitalDoctor").serialize(),
 						dataType:"json",
 						beforeSend: function(){
 							$.messager.progress({text:'处理中，请稍候...'});
@@ -125,11 +117,11 @@ window.GroupModel = {
 							$.messager.progress("close");
 							if(!msg.status){
 								$.messager.progress('close');
-								GroupModel.messager(msg.info);
+								HospitalDoctorModel.messager(msg.info);
 							} else {
-								$(GroupModel.global).dialog("close");
-								GroupModel.messager(msg.info);
-								GroupModel.refresh();
+								$(HospitalDoctorModel.global).dialog("close");
+								HospitalDoctorModel.messager(msg.info);
+								HospitalDoctorModel.refresh();
 							}
 						},
 						error: function(){
@@ -141,30 +133,30 @@ window.GroupModel = {
 				text:"取消",
 				iconCls:'icon-cancel',
 				handler:function(){
-					$(GroupModel.global).dialog("close");
+					$(HospitalDoctorModel.global).dialog("close");
 				}
 			}]
 		});
 	},
 	/**
-	 * [delete 删除角色]
+	 * [delete 删除医生]
 	 * @return {[type]} [description]
 	 */
 	delete: function(id){
 		$(this.global).dialog({
-			title: "确认删除角色",
+			title: "确认删除医生",
 			width: 300,
 			height: 120,
 			iconCls: "icon-remove",
 			modal: true,
-			href: '<?php echo U("Oa/System/deleteGroup");?>/id/'+id,
+			href: '<?php echo U("Oa/System/deleteHospitalDoctor");?>/id/'+id,
 			buttons: [{
 				text:"确认删除",
 				iconCls: 'icon-ok',
 				handler:function(){
 					$.ajax({
 						type: "post",
-						url: "<?php echo U('Oa/System/deleteGroup');?>",
+						url: "<?php echo U('Oa/System/deleteHospitalDoctor');?>",
 						data:{id:id},
 						dataType:"json",
 						beforeSend: function(){
@@ -174,11 +166,11 @@ window.GroupModel = {
 							$.messager.progress("close");
 							if(!msg.status){
 								$.messager.progress('close');
-								GroupModel.messager(msg.info);
+								HospitalDoctorModel.messager(msg.info);
 							} else {
-								$(GroupModel.global).dialog("close");
-								GroupModel.messager(msg.info);
-								GroupModel.refresh();
+								$(HospitalDoctorModel.global).dialog("close");
+								HospitalDoctorModel.messager(msg.info);
+								HospitalDoctorModel.refresh();
 							}
 						},
 						error: function(){
@@ -190,14 +182,14 @@ window.GroupModel = {
 				text:"取消",
 				iconCls:'icon-cancel',
 				handler:function(){
-					$(GroupModel.global).dialog("close");
+					$(HospitalDoctorModel.global).dialog("close");
 				}
 			}]
 		});
 	}
 
 }
-$("#System_group").datagrid({
+$("#System_hospitalDoctor").datagrid({
 	title: "当前位置："+$(".north-category.active").text()+" > "+$(".tabs-selected").text(),
 	remoteSort:false,
 	singleSelect:true,
@@ -205,17 +197,17 @@ $("#System_group").datagrid({
 	border:false,
 	fitColumns:true,
 	fit:true,
-	toolbar: GroupModel.toolbar,
+	toolbar: HospitalDoctorModel.toolbar,
 	idField:'id',
 	rownumbers:true,
-	url:"<?php echo U('Oa/System/group');?>",
+	url:"<?php echo U('Oa/System/hospitalDoctor');?>",
 	sortable:true,
 	columns:[[
-		{field:'id',title:'角色ID',width:20,align:'center',sortable:true,},
-		{field:'title',title:'角色名称',width:40},
-		{field:'groupuser',title:'角色所含用户',width:380},
-		{field:'status',title:'状态',width:20,formatter:GroupModel.status,},
-		{field:'op',title:'操作',width:40,align:'right',formatter:GroupModel.op}
+		{field:'id',title:'医生ID',width:20,align:'center',sortable:true,},
+		{field:'title',title:'医生名称',width:80},
+		{field:'doctor_number',title:'医生编号',width:80},
+		{field:'hospital',title:'所属医院',width:380},
+		{field:'op',title:'操作',width:40,align:'right',formatter:HospitalDoctorModel.op}
 	]],
 	pagination:true,
 	pagePosition:'bottom',

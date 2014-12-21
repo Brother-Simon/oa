@@ -25,7 +25,19 @@ window.OaModule = {
 			if($("#center_tabs").tabs('exists', node.text)){
 				$('#center_tabs').tabs('select', node.text);
 			}else{
-				$('#center_tabs').tabs('add',{title: node.text, href: node.url, closable: true, cache: true});
+				$('#center_tabs').tabs('add',{
+					title: node.text,
+					href: node.url,
+					closable: true,
+					cache: true,
+					tools:[{
+				        iconCls:'icon-mini-refresh',
+				        handler:function(){
+				            var tab = $("#center_tabs").tabs("getSelected");
+				            tab.panel("refresh",tab[0]['baseUrl']);
+				        }
+				    }]
+				});
 			}
 		}
 	},

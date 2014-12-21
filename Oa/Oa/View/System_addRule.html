@@ -54,7 +54,7 @@ $.extend($.fn.textbox.defaults.rules, {
 $("#Rule-pid").combotree({
 	width: 192,
 	value: <{$pid}>,
-	url: '<{:U("Oa/System/treeRule")}>',
+	url: '<{:U("Oa/Common/treeRule")}>',
 	require: true,
 });
 $("#Rule-title").textbox({
@@ -64,7 +64,7 @@ $("#Rule-title").textbox({
 });
 $("#Rule-name").textbox({
     required: true,
-    validType:['length[2,40]','remote[\'<{:U("Oa/System/checkAddRule")}>\',\'name\']'],
+    validType:['length[2,40]','remote[\'<{:U("Oa/Common/checkAddRule")}>\',\'name\']'],
     missingMessage: "必须填写规则URL",
     invalidMessage: "已经存在该规则",
 });

@@ -28,7 +28,8 @@ window.HospitalModel = {
 	},
 	//刷新
 	refresh: function(){
-		$(this.hospital).datagrid("reload");
+		var tab = $("#center_tabs").tabs("getSelected");
+		tab.panel("refresh",tab[0]['baseUrl']);
 	},
 	//状态格式化
 	status: function(value){
@@ -156,7 +157,7 @@ window.HospitalModel = {
 			height: 120,
 			iconCls: "icon-remove",
 			modal: true,
-			href: '<?php echo U("Oa/System/deleteHospital");?>'+'/id/'+id,
+			href: '<?php echo U("Oa/System/deleteHospital");?>/id/'+id,
 			buttons: [{
 				text:"确认删除",
 				iconCls: 'icon-ok',

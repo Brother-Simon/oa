@@ -1,5 +1,5 @@
-<div style='word-break:break-all;'>
-	<form id='addGroup' method='post' action="<{:U('Oa/System/addGroup')}>">
+<?php if (!defined('THINK_PATH')) exit();?><div style='word-break:break-all;'>
+	<form id='addGroup' method='post' action="<?php echo U('Oa/System/addGroup');?>">
 		<div style='width:100%;height:30px;'>
 			<span>角色名称：</span>
 			<input id='Group-title' name='title' />
@@ -19,7 +19,7 @@
 <script type="text/javascript">
 $("#Group-title").textbox({
     required: true,
-    validType:['length[2,40]','remote[\'<{:U("Oa/Common/checkAddGroup")}>\',\'title\']'],
+    validType:['length[2,40]','remote[\'<?php echo U("Oa/Common/checkAddGroup");?>\',\'title\']'],
     missingMessage: "必须填写角色名称",
     invalidMessage: "已经存在该角色",
 });
@@ -34,7 +34,7 @@ $("#Group-rules").combotree({
 	multiple:true,
 	cascadeCheck:false,
 	value:[17,18,19,20],
-	url: '<{:U("Oa/Common/treeGroup")}>',
+	url: '<?php echo U("Oa/Common/treeGroup");?>',
 	missingMessage: "必须选择角色规则",
 });
 </script>

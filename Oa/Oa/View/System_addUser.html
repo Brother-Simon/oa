@@ -48,7 +48,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 });
 $("#User-username").textbox({
     required: true,
-    validType:['length[2,40]','remote[\'/index.php/Oa/System/checkAddUser\',\'username\']'],
+    validType:['length[2,40]','remote[\'<{:U("Oa/Common/checkAddUser")}>\',\'username\']'],
     missingMessage: "必须填写用户名称",
     invalidMessage: "已经存在该用户",
 });
@@ -83,7 +83,7 @@ $("#User-usergroup").combotree({
 	multiple:true,
 	required: true,
 	validType:['length[2,400]'],
-	url: '/index.php/Oa/System/treeUsergroup',
+	url: '<{:U("Oa/Common/treeUsergroup")}>',
 	missingMessage: "必须选择用户所属组",
 });
 </script>

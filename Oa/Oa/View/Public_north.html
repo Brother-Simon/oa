@@ -1,7 +1,7 @@
 <div id="main-title"><{$Think.config.title}></div>
 <div id="main-module">
 	<foreach name="Apps" item="A" key="k">
-	<a href="javascript:void(0);" data-url='<{:U("Oa/Public/getLeftMenu")}>' data-click='true' class="north-category" data-id="<{$A.id}>"><{$A.title}></a>
+	<a href="javascript:void(0);" data-url='<{:U("Oa/Common/getLeftMenu")}>' data-click='true' class="north-category" data-id="<{$A.id}>"><{$A.title}></a>
 	</foreach>
 	<a href="javascript:void(0);" data-click='false' class="north-category easyui-splitbutton" data-options="menu:'#toparea-user-info-box'">用户信息</a>
 	<a href="javascript:void(0);" data-click='false' class="north-category easyui-splitbutton" data-options="menu:'#toparea-help-box'">系统帮助</a>

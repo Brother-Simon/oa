@@ -49,13 +49,13 @@ function getUserSession(){
     session("rules",$Rules);
 
     //获取登录用户系统首页信息
-	$user_login_log = M("UserLoginLog")->order('id desc')->find($User['id']);
+	$user_login_log = M("UserLoginLog")->where(array('uid'=>$User['id']))->order('logindate desc')->find();
 
     foreach($Gids as $t_k => $t_v){
-    	$login_groups = M("AuthGroup")->find($t_v['group_id']);
+
+    	$login_groups = M("AuthGroup")->find($t_v);
     	$tmp_login_info[] = $login_groups['title'];
 	}
-
 	$login_info['groups'] = implode(',', $tmp_login_info);
 	$login_info['logindate'] = $user_login_log['logindate'];
 	$login_info['ip'] = $user_login_log['ip'];
@@ -104,6 +104,18 @@ function getUsergroup(){
 		$Usergroup[$Usergroup_k]['text'] = $Usergroup[$Usergroup_k]['title'];
 	}
 	return $Usergroup;
+}
+/**
+ * [getHospital 获取医院列表]
+ * @return [type] Array [返回处理的数组]
+ */
+function getHospital(){
+	$Hospital = M("Hospital");
+	$Hospital = $Hospital->order("id asc")->select();
+	foreach($Hospital as $Hospital_k => $Hospital_v){
+		$Hospital[$Hospital_k]['text'] = $Hospital[$Hospital_k]['title'];
+	}
+	return $Hospital;
 }
 /**
  * [doReturn 返回前端ajax处理数据结果]

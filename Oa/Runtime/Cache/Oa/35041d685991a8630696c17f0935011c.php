@@ -6,7 +6,7 @@
 		</div>
 		<div style='width:100%;'>
 			<span>医院描述：</span>
-			<textarea id='Hospital-description' name="description"></textarea>
+			<textarea id='Hospital-description' name="description" style="height:50px;"></textarea>
 		</div>
 		<div style='width:100%;height:30px;'>
 			<span>医院状态：</span>

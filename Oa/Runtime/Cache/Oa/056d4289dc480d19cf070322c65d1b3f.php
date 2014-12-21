@@ -55,7 +55,7 @@ $.extend($.fn.textbox.defaults.rules, {
 $("#Rule-pid").combotree({
 	width: 192,
 	value: <?php echo ($Rule["pid"]); ?>,
-	url: '<?php echo U("Oa/System/treeRule");?>',
+	url: '<?php echo U("Oa/Common/treeRule");?>',
 	require: true,
 });
 $("#Rule-title").textbox({
@@ -65,7 +65,7 @@ $("#Rule-title").textbox({
 });
 $("#Rule-name").textbox({
     required: true,
-    validType:['length[2,40]','remote[\'<?php echo U("Oa/System/checkEditRule");?>/id/<?php echo ($Rule["id"]); ?>\',\'name\']'],
+    validType:['length[2,40]','remote[\'<?php echo U("Oa/Common/checkEditRule");?>/id/<?php echo ($Rule["id"]); ?>\',\'name\']'],
     queryParams: {
     	id: <?php echo ($Rule["id"]); ?>,
     },

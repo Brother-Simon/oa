@@ -19,7 +19,7 @@
 		
     		<div id="main-title"><?php echo (C("title")); ?></div>
 <div id="main-module">
-	<?php if(is_array($Apps)): foreach($Apps as $k=>$A): ?><a href="javascript:void(0);" data-url='<?php echo U("Oa/Public/getLeftMenu");?>' data-click='true' class="north-category" data-id="<?php echo ($A["id"]); ?>"><?php echo ($A["title"]); ?></a><?php endforeach; endif; ?>
+	<?php if(is_array($Apps)): foreach($Apps as $k=>$A): ?><a href="javascript:void(0);" data-url='<?php echo U("Oa/Common/getLeftMenu");?>' data-click='true' class="north-category" data-id="<?php echo ($A["id"]); ?>"><?php echo ($A["title"]); ?></a><?php endforeach; endif; ?>
 	<a href="javascript:void(0);" data-click='false' class="north-category easyui-splitbutton" data-options="menu:'#toparea-user-info-box'">用户信息</a>
 	<a href="javascript:void(0);" data-click='false' class="north-category easyui-splitbutton" data-options="menu:'#toparea-help-box'">系统帮助</a>
 	<div id="toparea-user-info-box" style="display:none;">
@@ -60,7 +60,7 @@
     <!--System Right-->
     <div id="center" data-options="region:'center'">
 	    <div id="center_tabs">
-        	<div title="系统首页">
+        	<div title="系统首页" data-options="tools:[{iconCls:'icon-mini-refresh',handler:function(){location.reload();}}]">
                 <ul id="main_index">
                     <li>
                         <div class="easyui-panel" title="我的个人信息">
@@ -107,8 +107,12 @@
                     <div class="clearfix"></div>
                     <li>
                         <div class="easyui-panel" title="更新日志">
+                            [2014-12-19]<br />
+                            1、后台医院设置->医生管理功能开发完成<br />
+                            2、优化用户权限分配<br />
                             [2014-12-14]<br />
                             1、后台医院设置->医院管理功能开发完成<br />
+                            2、优化ajax处理数据库信息回显函数<br />
                             [2014-12-13]<br />
                             1、后台核心权限功能细节与样式优化<br />
                             [2014-12-11]<br />

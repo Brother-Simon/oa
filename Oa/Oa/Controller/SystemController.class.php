@@ -56,37 +56,7 @@ class SystemController extends PublicController{
 		$this->pid = $pid;
 		$this->display();
 	}
-	/**
-	 * [checkAddRule 校验添加规则名称唯一性]
-	 * @return [type] [description]
-	 */
-	public function checkAddRule(){
-		//验证是否已存在规则
-		if(IS_POST && I('name')){
-			$count = M("AuthRule")->where(array("name"=>I("name")))->count();;
-			if(!$count){
-				echo 'true';
-			} else {
-				echo 'false';
-			}
-			exit;
-		}
-	}
-	/**
-	 * [treeRule 获取规则下拉树形列表]
-	 * @return [type] [description]
-	 */
-	public function treeRule(){
-		if(IS_POST){
-			$tree[0] = array(
-				'id' => 0,
-				'text' => '顶级规则',
-				'children' => getTree()
-			);
-			$this->ajaxReturn($tree);
-			exit;
-		}
-	}
+
 	/**
 	 * [editRule 编辑规则方法与视图]
 	 * @return [type] [description]
@@ -111,27 +81,6 @@ class SystemController extends PublicController{
 		$id = I('id',0,'intval');
 		$this->Rule = M("AuthRule")->find($id);
 		$this->display();
-	}
-	/**
-	 * [checkEditRule 校验编辑规则名称唯一性]
-	 * @return [type] [description]
-	 */
-	public function checkEditRule(){
-		//验证是否已存在规则
-		if(IS_POST && I('name')){
-			$where = array(
-				'id' => array('neq',I("get.id")),
-				'name' => I("name")
-			);
-			$AuthRule = M("AuthRule");
-			$count = $AuthRule->where($where)->count();;
-			if(!$count){
-				echo 'true';
-			} else {
-				echo 'false';
-			}
-			exit;
-		}
 	}
 	/**
 	 * [deleteRule 删除规则方法与视图]
@@ -176,16 +125,6 @@ class SystemController extends PublicController{
 		$this->display();
 	}
 	/**
-	 * [treeGroup 获取权限下拉节点列表]
-	 * @return [type] [description]
-	 */
-	public function treeGroup(){
-		if(IS_POST){
-			$this->ajaxReturn(getTree());
-			exit;
-		}
-	}
-	/**
 	 * [addGroup 添加角色方法与视图]
 	 * @return [type] [description]
 	 */
@@ -207,43 +146,6 @@ class SystemController extends PublicController{
 		}
 		$this->title = '添加角色';
 		$this->display();
-	}
-	/**
-	 * [checkAddGroup 校验添加角色名称唯一性]
-	 * @return [type] [description]
-	 */
-	public function checkAddGroup(){
-		//验证是否已存在规则
-		if(IS_POST && I('title')){
-			$count = M("AuthGroup")->where(array("title"=>I("title")))->count();;
-			if(!$count){
-				echo 'true';
-			} else {
-				echo 'false';
-			}
-			exit;
-		}
-	}
-	/**
-	 * [checkAddGroup 校验编辑角色名称唯一性]
-	 * @return [type] [description]
-	 */
-	public function checkEditGroup(){
-		//验证是否已存在规则
-		if(IS_POST && I('title')){
-			$where = array(
-				'id' => array('neq',I("get.id")),
-				'title' => I("title")
-			);
-			$AuthGroup = M("AuthGroup");
-			$count = $AuthGroup->where($where)->count();;
-			if(!$count){
-				echo 'true';
-			} else {
-				echo 'false';
-			}
-			exit;
-		}
 	}
 	/**
 	 * [checkAddGroup 编辑角色方法与视图]
@@ -360,53 +262,6 @@ class SystemController extends PublicController{
 		}
 		$this->title = '添加用户';
 		$this->display();
-	}
-	/**
-	 * [checkAddUser 校验添加用户名称唯一性]
-	 * @return [type] [description]
-	 */
-	public function checkAddUser(){
-		//验证是否已存在
-		if(IS_POST && I('username')){
-			$count = M("User")->where(array("username"=>I("username")))->count();;
-			if(!$count){
-				echo 'true';
-			} else {
-				echo 'false';
-			}
-			exit;
-		}
-	}
-	/**
-	 * [checkEditUser 校验编辑用户名称唯一性]
-	 * @return [type] [description]
-	 */
-	public function checkEditUser(){
-		//验证是否已存在
-		if(IS_POST && I('username')){
-			$where = array(
-				'id' => array('neq',I("get.id")),
-				'username' => I("username")
-			);
-			$User = M("User");
-			$count = $User->where($where)->count();;
-			if(!$count){
-				echo 'true';
-			} else {
-				echo 'false';
-			}
-			exit;
-		}
-	}
-	/**
-	 * [treeUsergroup 获取角色列表]
-	 * @return [type] [description]
-	 */
-	public function treeUsergroup(){
-		if(IS_POST){
-			$this->ajaxReturn(getUsergroup());
-			exit;
-		}
 	}
 	/**
 	 * [editUser 编辑用户方法与视图]
@@ -560,11 +415,29 @@ class SystemController extends PublicController{
 	 * @return [type] [description]
 	 */
 	public function hospitalDoctor(){
-		$this->title = '医生管理';
+		if(IS_POST){
+			$Hospital = M('HospitalDoctor')->field('id,title,doctor_number,hid,id as op')->page(I('page'),I('rows'))->select();
+			foreach($Hospital as $k => $v){
+				$tmp_hospital_title = array();
+				$tmp_hid = explode(',', $v['hid']);
+				foreach($tmp_hid as $k2 => $v2){
+					$tmp_hospital = M("Hospital")->find($v2);
+					$tmp_hospital_title[] = $tmp_hospital['title'];
+				}
+				$Hospital[$k]['hospital'] = implode(',', $tmp_hospital_title);
+			}
+			$Data = array(
+				'total' => M('Hospital')->count(),
+				'rows' => $Hospital
+			);
+			$this->ajaxReturn($Data);
+			exit;
+		}
+		$this->title = "医生管理";
 		$this->display();
 	}
 	/**
-	 * [addHospital 添加医生视图与方法]
+	 * [addHospitalDoctor 添加医生视图与方法]
 	 * @return [type] [description]
 	 */
 	public function addHospitalDoctor(){
@@ -576,6 +449,7 @@ class SystemController extends PublicController{
 					"info" => "医生数据创建失败，未知原因，请联系管理员"
 				);
 			} else {
+				$HospitalDoctor->hid = implode(',', $HospitalDoctor->hid);
 				$status = $HospitalDoctor->add();
 				$msg = doReturn("医生添加成功","医生添加失败,未知原因，请联系管理员",$status);
 			}
@@ -586,7 +460,7 @@ class SystemController extends PublicController{
 		$this->display();
 	}
 	/**
-	 * [editHospital 编辑医生视图与方法]
+	 * [editHospitalDoctor 编辑医生视图与方法]
 	 * @return [type] [description]
 	 */
 	public function editHospitalDoctor(){
@@ -598,15 +472,16 @@ class SystemController extends PublicController{
 					"info" => "医生数据创建失败，未知原因，请联系管理员"
 				);
 			} else {
+				$HospitalDoctor->hid = implode(',', $HospitalDoctor->hid);
 				$status = $HospitalDoctor->save();
-				$msg = doReturn("医生信息成功编辑","医生信息编辑失败,未知原因，请联系管理员",$status);
+				$msg = doReturn("医生编辑成功","医生编辑失败,未知原因，请联系管理员",$status);
 			}
 			$this->ajaxReturn($msg);
 			exit;
 		}
+		$this->title = '编辑医生';
 		$id = I('id',0,'intval');
 		$this->HospitalDoctor = M("HospitalDoctor")->find($id);
-		$this->title = '编辑医生';
 		$this->display();
 	}
 	/**
@@ -622,4 +497,266 @@ class SystemController extends PublicController{
 		}
 		echo "真心要删除ID： ".I('id')." 的医生吗？";
 	}
+	/**
+	 * [hospitalDepartment 科室管理视图与方法]
+	 * @return [type] [description]
+	 */
+	public function hospitalDepartment(){
+		if(IS_POST){
+			$Hospital = M('HospitalDepartment')->field('id,title,hid,id as op')->page(I('page'),I('rows'))->select();
+			foreach($Hospital as $k => $v){
+				$tmp_hospital_title = array();
+				$tmp_hid = explode(',', $v['hid']);
+				foreach($tmp_hid as $k2 => $v2){
+					$tmp_hospital = M("Hospital")->find($v2);
+					$tmp_hospital_title[] = $tmp_hospital['title'];
+				}
+				$Hospital[$k]['hospital'] = implode(',', $tmp_hospital_title);
+			}
+			$Data = array(
+				'total' => M('Hospital')->count(),
+				'rows' => $Hospital
+			);
+			$this->ajaxReturn($Data);
+			exit;
+		}
+		$this->title = "科室管理";
+		$this->display();
+	}
+	/**
+	 * [addHospitalDepartment 添加科室视图与方法]
+	 * @return [type] [description]
+	 */
+	public function addHospitalDepartment(){
+		if(IS_POST && I("addHospitalDepartment")){
+			$HospitalDepartment = M("HospitalDepartment");
+			if(!$HospitalDepartment->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "科室数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$HospitalDepartment->hid = implode(',', $HospitalDepartment->hid);
+				$status = $HospitalDepartment->add();
+				$msg = doReturn("科室添加成功","科室添加失败,未知原因，请联系管理员",$status);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$this->title = '添加科室';
+		$this->display();
+	}
+	/**
+	 * [editHospitalDepartment 编辑科室视图与方法]
+	 * @return [type] [description]
+	 */
+	public function editHospitalDepartment(){
+		if(IS_POST && I("editHospitalDepartment")){
+			$HospitalDepartment = M("HospitalDepartment");
+			if(!$HospitalDepartment->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "科室数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$HospitalDepartment->hid = implode(',', $HospitalDepartment->hid);
+				$status = $HospitalDepartment->save();
+				$msg = doReturn("科室编辑成功","科室编辑失败,未知原因，请联系管理员",$status);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$this->title = '编辑科室';
+		$id = I('id',0,'intval');
+		$this->HospitalDepartment = M("HospitalDepartment")->find($id);
+		$this->display();
+	}
+	/**
+	 * [deleteHospitalDepartment 删除科室视图与方法]
+	 * @return [type] [description]
+	 */
+	public function deleteHospitalDepartment(){
+		if(IS_POST && I('id')){
+			$status = M("HospitalDepartment")->delete(I('id'));
+			$msg = doReturn("科室数据成功删除","科室数据删除失败，请联系管理员",$status);
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		echo "真心要删除ID： ".I('id')." 的科室吗？";
+	}
+	/**
+	 * [hospitalDisease 疾病管理视图与方法]
+	 * @return [type] [description]
+	 */
+	public function hospitalDisease(){
+		if(IS_POST){
+			$Hospital = M('HospitalDisease')->field('id,title,hid,id as op')->page(I('page'),I('rows'))->select();
+			foreach($Hospital as $k => $v){
+				$tmp_hospital_title = array();
+				$tmp_hid = explode(',', $v['hid']);
+				foreach($tmp_hid as $k2 => $v2){
+					$tmp_hospital = M("Hospital")->find($v2);
+					$tmp_hospital_title[] = $tmp_hospital['title'];
+				}
+				$Hospital[$k]['hospital'] = implode(',', $tmp_hospital_title);
+			}
+			$Data = array(
+				'total' => M('Hospital')->count(),
+				'rows' => $Hospital
+			);
+			$this->ajaxReturn($Data);
+			exit;
+		}
+		$this->title = "疾病管理";
+		$this->display();
+	}
+	/**
+	 * [addHospitalDisease 添加疾病视图与方法]
+	 * @return [type] [description]
+	 */
+	public function addHospitalDisease(){
+		if(IS_POST && I("addHospitalDisease")){
+			$HospitalDisease = M("HospitalDisease");
+			if(!$HospitalDisease->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "疾病数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$HospitalDisease->hid = implode(',', $HospitalDisease->hid);
+				$status = $HospitalDisease->add();
+				$msg = doReturn("疾病添加成功","疾病添加失败,未知原因，请联系管理员",$status);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$this->title = '添加疾病';
+		$this->display();
+	}
+	/**
+	 * [editHospitalDisease 编辑疾病视图与方法]
+	 * @return [type] [description]
+	 */
+	public function editHospitalDisease(){
+		if(IS_POST && I("editHospitalDisease")){
+			$HospitalDisease = M("HospitalDisease");
+			if(!$HospitalDisease->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "疾病数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$HospitalDisease->hid = implode(',', $HospitalDisease->hid);
+				$status = $HospitalDisease->save();
+				$msg = doReturn("疾病编辑成功","疾病编辑失败,未知原因，请联系管理员",$status);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$this->title = '编辑疾病';
+		$id = I('id',0,'intval');
+		$this->HospitalDisease = M("HospitalDisease")->find($id);
+		$this->display();
+	}
+	/**
+	 * [deleteHospitalDisease 删除疾病视图与方法]
+	 * @return [type] [description]
+	 */
+	public function deleteHospitalDisease(){
+		if(IS_POST && I('id')){
+			$status = M("HospitalDisease")->delete(I('id'));
+			$msg = doReturn("疾病数据成功删除","疾病数据删除失败，请联系管理员",$status);
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		echo "真心要删除ID： ".I('id')." 的疾病吗？";
+	}
+	/**
+	 * [hospitalSite 站点管理视图与方法]
+	 * @return [type] [description]
+	 */
+	public function hospitalSite(){
+		if(IS_POST){
+			$Hospital = M('HospitalSite')->field('id,title,url,hid,id as op')->page(I('page'),I('rows'))->select();
+			foreach($Hospital as $k => $v){
+				$tmp_hospital_title = array();
+				$tmp_hid = explode(',', $v['hid']);
+				foreach($tmp_hid as $k2 => $v2){
+					$tmp_hospital = M("Hospital")->find($v2);
+					$tmp_hospital_title[] = $tmp_hospital['title'];
+				}
+				$Hospital[$k]['hospital'] = implode(',', $tmp_hospital_title);
+			}
+			$Data = array(
+				'total' => M('Hospital')->count(),
+				'rows' => $Hospital
+			);
+			$this->ajaxReturn($Data);
+			exit;
+		}
+		$this->title = "站点管理";
+		$this->display();
+	}
+	/**
+	 * [addHospitalSite 添加站点视图与方法]
+	 * @return [type] [description]
+	 */
+	public function addHospitalSite(){
+		if(IS_POST && I("addHospitalSite")){
+			$HospitalSite = M("HospitalSite");
+			if(!$HospitalSite->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "站点数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$HospitalSite->hid = implode(',', $HospitalSite->hid);
+				$status = $HospitalSite->add();
+				$msg = doReturn("站点添加成功","站点添加失败,未知原因，请联系管理员",$status);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$this->title = '添加站点';
+		$this->display();
+	}
+	/**
+	 * [editHospitalSite 编辑站点视图与方法]
+	 * @return [type] [description]
+	 */
+	public function editHospitalSite(){
+		if(IS_POST && I("editHospitalSite")){
+			$HospitalSite = M("HospitalSite");
+			if(!$HospitalSite->create()){
+				$msg = array(
+					"status" => false,
+					"info" => "站点数据创建失败，未知原因，请联系管理员"
+				);
+			} else {
+				$HospitalSite->hid = implode(',', $HospitalSite->hid);
+				$status = $HospitalSite->save();
+				$msg = doReturn("站点编辑成功","站点编辑失败,未知原因，请联系管理员",$status);
+			}
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		$this->title = '编辑站点';
+		$id = I('id',0,'intval');
+		$this->HospitalSite = M("HospitalSite")->find($id);
+		$this->display();
+	}
+	/**
+	 * [deleteHospitalSite 删除站点视图与方法]
+	 * @return [type] [description]
+	 */
+	public function deleteHospitalSite(){
+		if(IS_POST && I('id')){
+			$status = M("HospitalSite")->delete(I('id'));
+			$msg = doReturn("站点数据成功删除","站点数据删除失败，请联系管理员",$status);
+			$this->ajaxReturn($msg);
+			exit;
+		}
+		echo "真心要删除ID： ".I('id')." 的站点吗？";
+	}
+
 }

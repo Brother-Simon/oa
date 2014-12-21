@@ -20,7 +20,7 @@
 <script type="text/javascript">
 $("#Group-title").textbox({
     required: true,
-    validType:['length[2,40]','remote[\'/index.php/Oa/System/checkEditGroup/id/<?php echo ($Group["id"]); ?>\',\'title\']'],
+    validType:['length[2,40]','remote[\'<?php echo U("Oa/Common/checkEditGroup");?>/id/<?php echo ($Group["id"]); ?>\',\'title\']'],
     missingMessage: "必须填写角色名称",
     invalidMessage: "已经存在该角色",
 });
@@ -34,7 +34,7 @@ $("#Group-rules").combotree({
 	checkbox:true,
 	multiple:true,
 	value: [<?php echo ($Group["rules"]); ?>],
-	url: '/index.php/Oa/System/treeGroup',
+	url: '<?php echo U("Oa/Common/treeGroup");?>',
 	missingMessage: "必须选择角色规则",
 	cascadeCheck:false
 });

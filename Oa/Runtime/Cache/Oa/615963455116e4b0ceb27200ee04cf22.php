@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit();?><div id='System_rule'>dsfsdf</div>
+<?php if (!defined('THINK_PATH')) exit();?><div id='System_rule'></div>
 <script>
 window.RuleModel = {
 	/**
@@ -106,7 +106,8 @@ window.RuleModel = {
 	 * @return {[type]} [description]
 	 */
 	refresh: function(){
-		$(this.rule).treegrid("reload");
+		var tab = $("#center_tabs").tabs("getSelected");
+		tab.panel("refresh",tab[0]['baseUrl']);
 	},
 	/**
 	 * [order 规则排序]
@@ -128,13 +129,12 @@ window.RuleModel = {
 	 * @param {[type]} pid [description]
 	 */
 	add: function(pid){
-		var addUrl = '<?php echo U("Oa/System/addRule/");?>';
 		$(this.global).dialog({
 			title: '添加规则',
 			width: 300,
 			height: 370,
 			iconCls: 'icon-add',
-			href: addUrl+"/pid/"+pid,
+			href: '<?php echo U("Oa/System/addRule/");?>/pid/'+pid,
 			modal: true,
 			buttons: [{
 				text:"添加",
@@ -179,13 +179,12 @@ window.RuleModel = {
 		});
 	},
 	edit: function(id){
-		var editUrl = '<?php echo U("Oa/System/editRule/");?>';
 		$(this.global).dialog({
 			title: '编辑规则',
 			width: 300,
 			height: 370,
 			iconCls: 'icon-edit',
-			href: editUrl+"/id/"+id,
+			href: '<?php echo U("Oa/System/editRule/");?>/id/'+id,
 			modal: true,
 			buttons: [{
 				text:"确认编辑",
@@ -240,7 +239,7 @@ window.RuleModel = {
 			height: 120,
 			iconCls: "icon-remove",
 			modal: true,
-			href: '<?php echo U("Oa/System/deleteRule");?>'+'/id/'+id,
+			href: '<?php echo U("Oa/System/deleteRule");?>/id/'+id,
 			buttons: [{
 				text:"确认删除",
 				iconCls: 'icon-ok',
@@ -292,13 +291,12 @@ $("#System_rule").treegrid({
 	treeField: 'title',
 	rownumbers: true,
 	animate: true,
-	sortable: true,
 	url: "<?php echo U('Oa/System/rule');?>",
 	queryParams: {
 		action: 'getList'
 	},
 	columns:[[
-		{field:'sort',title:'排序',width:20,align:'center',sortable:true,formatter:RuleModel.sort,},
+		{field:'sort',title:'排序',width:20,align:'center',formatter:RuleModel.sort,},
 		{field:'id',title:'规则ID',width:20,align:'center'},
 		{field:'title',title:'规则名称',width:80,},
 		{field:'name',title:'规则标识',width:80,},

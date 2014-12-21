@@ -1,0 +1,42 @@
+<div style='word-break:break-all;'>
+	<form id='editHospitalSite' method='post' action="<{:U('Oa/System/editHospitalSite')}>">
+		<div style='width:100%;height:30px;'>
+			<span>站点名称：</span>
+			<input id='HospitalSite-title' name='title' value="<{$HospitalSite.title}>" />
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>站点编号：</span>
+			<input id='HospitalSite-url' name='url' value="<{$HospitalSite.url}>" />
+		</div>
+		<div style='width:100%;height:30px;'>
+			<span>所属站点：</span>
+			<input id='HospitalSite-hid' name='hid[]' />
+		</div>
+		<input type='hidden' name='editHospitalSite' value='editHospitalSite' />
+		<input type='hidden' name='id' value='<{$HospitalSite.id}>' />
+	</form>
+</div>
+<script type="text/javascript">
+$("#HospitalSite-title").textbox({
+    required: true,
+    validType:['length[2,40]'],
+    missingMessage: "必须填写站点名称",
+    invalidMessage: "已经存在该站点",
+});
+$("#HospitalSite-url").textbox({
+    required: true,
+    validType:['length[2,40]'],
+    missingMessage: "必须填写站点网址",
+    invalidMessage: "已经存在该站点",
+});
+$("#HospitalSite-hid").combotree({
+	width: 192,
+	checkbox:true,
+	multiple:true,
+	required: true,
+	validType:['length[2,400]'],
+	url: '<{:U("Oa/Common/treeHospital")}>',
+	value: '<{$HospitalSite.hid}>',
+	missingMessage: "必须选择站点所属医院"
+});
+</script>

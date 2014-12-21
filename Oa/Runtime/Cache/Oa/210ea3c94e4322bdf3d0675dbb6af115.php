@@ -28,7 +28,8 @@ window.UserModel = {
 	},
 	//刷新
 	refresh: function(){
-		$(this.user).datagrid("reload");
+		var tab = $("#center_tabs").tabs("getSelected");
+		tab.panel("refresh",tab[0]['baseUrl']);
 	},
 	//状态格式化
 	status: function(value){
@@ -157,7 +158,7 @@ window.UserModel = {
 			height: 120,
 			iconCls: "icon-remove",
 			modal: true,
-			href: '<?php echo U("Oa/System/deleteUser");?>'+'/id/'+id,
+			href: '<?php echo U("Oa/System/deleteUser");?>/id/'+id,
 			buttons: [{
 				text:"确认删除",
 				iconCls: 'icon-ok',

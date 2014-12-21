@@ -15,7 +15,7 @@
 
 <body>
 <div id="login" class="easyui-dialog">
-	<form action="" method="post" id="loginform">
+	<form action="<?php echo U('Oa/Login/index');?>" method="post" id="loginform">
     	<label>
         	<span>用户名：</span>
             <input type="text" name="username" class="easyui-textbox" />

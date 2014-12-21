@@ -55,7 +55,7 @@ $.extend($.fn.textbox.defaults.rules, {
 $("#Rule-pid").combotree({
 	width: 192,
 	value: <{$Rule.pid}>,
-	url: '<{:U("Oa/System/treeRule")}>',
+	url: '<{:U("Oa/Common/treeRule")}>',
 	require: true,
 });
 $("#Rule-title").textbox({
@@ -65,7 +65,7 @@ $("#Rule-title").textbox({
 });
 $("#Rule-name").textbox({
     required: true,
-    validType:['length[2,40]','remote[\'<{:U("Oa/System/checkEditRule")}>/id/<{$Rule.id}>\',\'name\']'],
+    validType:['length[2,40]','remote[\'<{:U("Oa/Common/checkEditRule")}>/id/<{$Rule.id}>\',\'name\']'],
     queryParams: {
     	id: <{$Rule.id}>,
     },
@@ -84,6 +84,6 @@ $("#Rule-sort").textbox({
 $("#Rule-cls").combotree({
 	width: 190,
 	value: '<{$Rule.cls}>',
-	url: "/Public/Json/icon.php",
+	url: "__PUBLIC__/Json/icon.php",
 });
 </script>
